@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import TicketList from './Components/TicketsList';
 import EditTicket from './Components/EditTicket';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -22,7 +22,7 @@ function App() {
       <Provider store={store}>
         <Router>
           <Switch>
-            <Grid container px={5}>
+            <Grid container>
               <Route exact path="/" component={TicketList} />
               <Route exact path="/ticket/:id" component={EditTicket} />
             </Grid>

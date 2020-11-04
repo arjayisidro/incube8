@@ -12,6 +12,8 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MuiGrid from '@material-ui/core/Grid';
 import {
   compose as composeStyles,
@@ -29,6 +31,8 @@ const TicketList = ({ tickets, addTicket, updateTicket }) => {
   const classes = Styles();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleSubmit = (values) => {
     setIsLoading(true);
@@ -64,16 +68,16 @@ const TicketList = ({ tickets, addTicket, updateTicket }) => {
   }, [tickets]);
 
   return (
-    <Grid container>
+    <Grid container px={5}>
       <Backdrop className={classes.backdrop} open={isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Grid item lg={12} md={12} pt={4}>
+      <Grid item lg={12} md={12} pt={4} sm={12}>
         <Typography variant="h3" align="center">
           Ticket List
         </Typography>
       </Grid>
-      <Grid item md={12} lg={12} py={4}>
+      <Grid item md={12} lg={12} py={4} sm={12} className={classes.fullWidth}>
         <Formik
           initialValues={{ ticket: '' }}
           onSubmit={(values, { resetForm }) => {
@@ -82,38 +86,43 @@ const TicketList = ({ tickets, addTicket, updateTicket }) => {
           }}
         >
           <Form>
-            <Field
-              render={({ field }) => (
-                <TextField
-                  error={isError}
-                  helperText={isError && 'This is mandatory'}
-                  size="small"
-                  variant="outlined"
-                  label="Add Ticket"
-                  {...field}
-                />
-              )}
-              name="ticket"
-            />
-            <Button
-              className={classes.submitButtonStyle}
-              type="submit"
-              variant="contained"
-              size="large"
-              color="primary"
-              endIcon={<SaveIcon />}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <Typography variant="body1">...</Typography>
-              ) : (
-                <Typography variant="body1">Add Ticket</Typography>
-              )}
-            </Button>
+            <Grid item lg={3}>
+              <Field
+                render={({ field }) => (
+                  <TextField
+                    error={isError}
+                    helperText={isError && 'This is mandatory'}
+                    size="small"
+                    variant="outlined"
+                    label="Add Ticket"
+                    fullWidth
+                    {...field}
+                  />
+                )}
+                name="ticket"
+              />
+            </Grid>
+            <Grid item lg={3} pt={1}>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                color="primary"
+                fullWidth
+                endIcon={<SaveIcon />}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Typography variant="body1">...</Typography>
+                ) : (
+                  <Typography variant="body1">Add Ticket</Typography>
+                )}
+              </Button>
+            </Grid>
           </Form>
         </Formik>
       </Grid>
-      <Grid item md={4} lg={4}>
+      <Grid item md={4} lg={4} sm={12} className={classes.fullWidth}>
         <Paper className={classes.paperStyleInProgress}>
           <Grid py={2}>
             <Typography variant="h4" align="center">
@@ -128,7 +137,15 @@ const TicketList = ({ tickets, addTicket, updateTicket }) => {
           />
         </Paper>
       </Grid>
-      <Grid item md={4} lg={4}>
+      <Grid
+        item
+        md={4}
+        lg={4}
+        sm={12}
+        pr={isSmall ? 0 : 2}
+        py={isSmall && 1}
+        className={classes.fullWidth}
+      >
         <Paper className={classes.paperStyleDone}>
           <Grid py={2}>
             <Typography variant="h4" align="center">
@@ -143,7 +160,7 @@ const TicketList = ({ tickets, addTicket, updateTicket }) => {
           />
         </Paper>
       </Grid>
-      <Grid item md={4} lg={4}>
+      <Grid item md={4} lg={4} sm={12} className={classes.fullWidth}>
         <Paper className={classes.paperStyleClose}>
           <Grid py={2}>
             <Typography variant="h4" align="center">

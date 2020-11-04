@@ -5,6 +5,8 @@ import SaveIcon from '@material-ui/icons/Save';
 import { connect } from 'react-redux';
 import styled from '@material-ui/styles/styled';
 import MuiGrid from '@material-ui/core/Grid';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {
   compose as composeStyles,
   palette,
@@ -31,6 +33,8 @@ const EditTicket = ({ updateTicket, location }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const classes = Styles();
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     setTicketValue(location.state.ticket);
@@ -62,11 +66,11 @@ const EditTicket = ({ updateTicket, location }) => {
       <Backdrop className={classes.backdrop} open={isLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Grid item md={12} py={5}>
+      <Grid item md={12} py={5} sm={12}>
         <Typography variant="h3">Edit Ticket</Typography>
       </Grid>
       <Paper className={classes.editPaperStyle}>
-        <Grid item md={12} lg={12}>
+        <Grid item md={12} lg={12} sm={12}>
           <Formik
             enableReinitialize={true}
             initialValues={{
@@ -116,7 +120,7 @@ const EditTicket = ({ updateTicket, location }) => {
                 </Grid>
               </Grid>
               <Grid container pt={3}>
-                <Grid item xs={4} md={12} lg={12} pb={1} pt={1}>
+                <Grid item xs={12} md={12} lg={12} pb={1} pt={1}>
                   <Button
                     type="submit"
                     variant="contained"
