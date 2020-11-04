@@ -21,8 +21,7 @@ import {
   CircularProgress,
   MenuItem,
 } from '@material-ui/core';
-import { status } from './constants';
-const DONE = 'done';
+import { STATUS, DONE } from './constants';
 
 const Grid = styled(MuiGrid)(composeStyles(spacing, palette, sizing));
 
@@ -105,7 +104,7 @@ const EditTicket = ({ updateTicket, location }) => {
                         label="Status"
                         {...field}
                       >
-                        {status.map((option) => (
+                        {STATUS.map((option) => (
                           <MenuItem key={option.value} value={option.value}>
                             {option.label}
                           </MenuItem>

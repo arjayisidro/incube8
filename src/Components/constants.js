@@ -1,4 +1,4 @@
-export const status = [
+export const STATUS = [
   {
     value: 'pending',
     label: 'In Progress',
